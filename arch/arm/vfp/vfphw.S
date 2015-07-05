@@ -116,16 +116,16 @@ vfp_reload_hw:
 	@ For SMP, if this thread does not own the hw context, then we
 	@ need to reload it.  No need to save the old state as on SMP,
 	@ we always save the state when we switch away from a thread.
-@	bne	vfp_reload_hw
+	bne	vfp_reload_hw
 
 	@ This thread has ownership of the current hardware context.
 	@ However, it may have been migrated to another CPU, in which
 	@ case the saved state is newer than the hardware context.
 	@ Check this by looking at the CPU number which the state was
 	@ last loaded onto.
-@	ldr	ip, [r10, #VFP_CPU]
-@	teq	ip, r11
-@	beq	vfp_hw_state_valid
+	ldr	ip, [r10, #VFP_CPU]
+	teq	ip, r11
+	beq	vfp_hw_state_valid
 
 vfp_reload_hw:
 	@ We're loading this threads state into the VFP hardware. Update
